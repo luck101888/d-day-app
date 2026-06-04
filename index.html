@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Calculator - Premium Web App</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark">
+    <div class="app-container">
+        <!-- Background Blur Decorative Blobs -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-accent">Aura</span>Calc
+            </div>
+            
+            <div class="header-actions">
+                <!-- Theme Switcher -->
+                <div class="theme-switcher">
+                    <button class="theme-btn active" data-theme="dark" title="다크 모드">
+                        <i data-lucide="moon"></i>
+                    </button>
+                    <button class="theme-btn" data-theme="light" title="라이트 모드">
+                        <i data-lucide="sun"></i>
+                    </button>
+                    <button class="theme-btn" data-theme="cyberpunk" title="사이버펑크 모드">
+                        <i data-lucide="zap"></i>
+                    </button>
+                </div>
+                
+                <!-- History Toggle -->
+                <button class="icon-btn" id="history-toggle" title="계산 기록">
+                    <i data-lucide="history"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="calculator-container">
+            <!-- Calculator Display -->
+            <div class="calculator-display">
+                <div class="display-row expression-row" id="display-expression"></div>
+                <div class="display-row input-row">
+                    <span class="cursor" id="input-cursor">|</span>
+                    <span class="input-text" id="display-input">0</span>
+                </div>
+            </div>
+
+            <!-- Mode Switcher -->
+            <div class="mode-selector">
+                <button class="mode-btn active" id="mode-std">기본형</button>
+                <button class="mode-btn" id="mode-sci">공학용</button>
+            </div>
+
+            <!-- Calculator Keypad -->
+            <div class="keypad-wrapper">
+                <!-- Scientific Panel (Initially Hidden/Collapsed) -->
+                <div class="scientific-panel collapsed" id="sci-panel">
+                    <button class="btn btn-sci" data-action="sin">sin</button>
+                    <button class="btn btn-sci" data-action="cos">cos</button>
+                    <button class="btn btn-sci" data-action="tan">tan</button>
+                    <button class="btn btn-sci" data-action="deg-rad" id="deg-rad-toggle">DEG</button>
+                    
+                    <button class="btn btn-sci" data-action="log">log</button>
+                    <button class="btn btn-sci" data-action="ln">ln</button>
+                    <button class="btn btn-sci" data-action="pow">x<sup>y</sup></button>
+                    <button class="btn btn-sci" data-action="sqrt">√</button>
+                    
+                    <button class="btn btn-sci" data-action="pi">π</button>
+                    <button class="btn btn-sci" data-action="e">e</button>
+                    <button class="btn btn-sci" data-action="factorial">x!</button>
+                    <button class="btn btn-sci" data-action="percent">%</button>
+                </div>
+
+                <!-- Standard Keypad -->
+                <div class="standard-keypad">
+                    <!-- Row 1 -->
+                    <button class="btn btn-op btn-clear" data-action="clear">AC</button>
+                    <button class="btn btn-op" data-action="backspace">
+                        <i data-lucide="delete"></i>
+                    </button>
+                    <button class="btn btn-op" data-action="parenthesis">( )</button>
+                    <button class="btn btn-op" data-action="operator" data-val="/">÷</button>
+
+                    <!-- Row 2 -->
+                    <button class="btn btn-num" data-val="7">7</button>
+                    <button class="btn btn-num" data-val="8">8</button>
+                    <button class="btn btn-num" data-val="9">9</button>
+                    <button class="btn btn-op" data-action="operator" data-val="*">×</button>
+
+                    <!-- Row 3 -->
+                    <button class="btn btn-num" data-val="4">4</button>
+                    <button class="btn btn-num" data-val="5">5</button>
+                    <button class="btn btn-num" data-val="6">6</button>
+                    <button class="btn btn-op" data-action="operator" data-val="-">-</button>
+
+                    <!-- Row 4 -->
+                    <button class="btn btn-num" data-val="1">1</button>
+                    <button class="btn btn-num" data-val="2">2</button>
+                    <button class="btn btn-num" data-val="3">3</button>
+                    <button class="btn btn-op" data-action="operator" data-val="+">+</button>
+
+                    <!-- Row 5 -->
+                    <button class="btn btn-num" data-val="negate">±</button>
+                    <button class="btn btn-num" data-val="0">0</button>
+                    <button class="btn btn-num" data-val=".">.</button>
+                    <button class="btn btn-equals" data-action="calculate">=</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- History Drawer -->
+        <div class="history-drawer" id="history-drawer">
+            <div class="drawer-header">
+                <h3>계산 기록</h3>
+                <div class="drawer-actions">
+                    <button class="icon-btn text-danger" id="history-clear" title="기록 전체 삭제">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+                    <button class="icon-btn" id="history-close">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="drawer-content" id="history-list">
+                <!-- History Items will be dynamically generated here -->
+                <div class="empty-history">
+                    <i data-lucide="clock" class="empty-icon"></i>
+                    <p>저장된 계산 기록이 없습니다</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toast Notification (for copy to clipboard feedback) -->
+        <div class="toast-container" id="toast">
+            <span id="toast-message">클립보드에 복사되었습니다.</span>
+        </div>
+    </div>
+
+    <!-- Core App Logic -->
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
