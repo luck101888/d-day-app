@@ -1,156 +1,281 @@
-﻿<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE html>
+<html class="dark" lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Calculator - Premium Web App</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Custom Style -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ANTIGRAVITY TEMPORAL TRACKER</title>
+    <!-- Tailwind CSS Play CDN with plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Custom CSS Variables and Keyframes -->
     <link rel="stylesheet" href="style.css">
+    
+    <script id="tailwind-config">
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        "colors": {
+                            "on-surface-variant": "#c7c4d7",
+                            "on-secondary-fixed": "#001f26",
+                            "on-tertiary": "#4f2500",
+                            "on-primary-fixed-variant": "#2f2ebe",
+                            "tertiary-fixed": "#ffdcc5",
+                            "on-secondary-fixed-variant": "#004e5c",
+                            "on-secondary-container": "#00424e",
+                            "background": "#131315",
+                            "primary-container": "#8083ff",
+                            "on-error-container": "#ffdad6",
+                            "secondary-fixed-dim": "#4cd7f6",
+                            "on-background": "#e5e1e4",
+                            "surface-variant": "#353437",
+                            "on-primary-fixed": "#07006c",
+                            "on-tertiary-container": "#452000",
+                            "primary": "#c0c1ff",
+                            "surface-container-lowest": "#0e0e10",
+                            "tertiary-fixed-dim": "#ffb783",
+                            "primary-fixed": "#e1e0ff",
+                            "inverse-primary": "#494bd6",
+                            "inverse-on-surface": "#303032",
+                            "surface-container-highest": "#353437",
+                            "secondary": "#4cd7f6",
+                            "surface-tint": "#c0c1ff",
+                            "on-secondary": "#003640",
+                            "on-tertiary-fixed-variant": "#703700",
+                            "surface-container-low": "#1b1b1d",
+                            "inverse-surface": "#e5e1e4",
+                            "on-error": "#690005",
+                            "surface-bright": "#39393b",
+                            "tertiary-container": "#d97721",
+                            "surface-container-high": "#2a2a2c",
+                            "on-surface": "#e5e1e4",
+                            "error-container": "#93000a",
+                            "surface-container": "#201f21",
+                            "error": "#ffb4ab",
+                            "surface-dim": "#131315",
+                            "tertiary": "#ffb783",
+                            "on-tertiary-fixed": "#301400",
+                            "outline-variant": "#464554",
+                            "on-primary": "#1000a9",
+                            "surface": "#131315",
+                            "outline": "#908fa0",
+                            "secondary-fixed": "#acedff",
+                            "secondary-container": "#03b5d3",
+                            "on-primary-container": "#0d0096",
+                            "primary-fixed-dim": "#c0c1ff"
+                        },
+                        "spacing": {
+                            "base": "8px",
+                            "gutter": "16px",
+                            "md": "16px",
+                            "margin-desktop": "48px",
+                            "max-width": "1200px",
+                            "sm": "8px",
+                            "lg": "24px",
+                            "margin-mobile": "16px",
+                            "xl": "32px",
+                            "xs": "4px"
+                        },
+                        "fontFamily": {
+                            "label-caps": ["Inter"],
+                            "mono-data": ["Inter"],
+                            "headline-lg": ["Inter"],
+                            "body-md": ["Inter"],
+                            "display-countdown": ["Inter"]
+                        },
+                        "fontSize": {
+                            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                            "mono-data": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500"}],
+                            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                            "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                            "display-countdown": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}]
+                        }
+                    },
+                },
+            }
+        }
+    </script>
 </head>
-<body class="theme-dark">
-    <div class="app-container">
-        <!-- Background Blur Decorative Blobs -->
-        <div class="bg-blob blob-1"></div>
-        <div class="bg-blob blob-2"></div>
-        
-        <header class="app-header">
-            <div class="logo">
-                <span class="logo-accent">Aura</span>Calc
-            </div>
-            
-            <div class="header-actions">
-                <!-- Theme Switcher -->
-                <div class="theme-switcher">
-                    <button class="theme-btn active" data-theme="dark" title="다크 모드">
-                        <i data-lucide="moon"></i>
-                    </button>
-                    <button class="theme-btn" data-theme="light" title="라이트 모드">
-                        <i data-lucide="sun"></i>
-                    </button>
-                    <button class="theme-btn" data-theme="cyberpunk" title="사이버펑크 모드">
-                        <i data-lucide="zap"></i>
-                    </button>
-                </div>
-                
-                <!-- History Toggle -->
-                <button class="icon-btn" id="history-toggle" title="계산 기록">
-                    <i data-lucide="history"></i>
-                </button>
-            </div>
-        </header>
-
-        <main class="calculator-container">
-            <!-- Calculator Display -->
-            <div class="calculator-display">
-                <div class="display-row expression-row" id="display-expression"></div>
-                <div class="display-row input-row">
-                    <span class="cursor" id="input-cursor">|</span>
-                    <span class="input-text" id="display-input">0</span>
-                </div>
-            </div>
-
-            <!-- Mode Switcher -->
-            <div class="mode-selector">
-                <button class="mode-btn active" id="mode-std">기본형</button>
-                <button class="mode-btn" id="mode-sci">공학용</button>
-            </div>
-
-            <!-- Calculator Keypad -->
-            <div class="keypad-wrapper">
-                <!-- Scientific Panel (Initially Hidden/Collapsed) -->
-                <div class="scientific-panel collapsed" id="sci-panel">
-                    <button class="btn btn-sci" data-action="sin">sin</button>
-                    <button class="btn btn-sci" data-action="cos">cos</button>
-                    <button class="btn btn-sci" data-action="tan">tan</button>
-                    <button class="btn btn-sci" data-action="deg-rad" id="deg-rad-toggle">DEG</button>
-                    
-                    <button class="btn btn-sci" data-action="log">log</button>
-                    <button class="btn btn-sci" data-action="ln">ln</button>
-                    <button class="btn btn-sci" data-action="pow">x<sup>y</sup></button>
-                    <button class="btn btn-sci" data-action="sqrt">√</button>
-                    
-                    <button class="btn btn-sci" data-action="pi">π</button>
-                    <button class="btn btn-sci" data-action="e">e</button>
-                    <button class="btn btn-sci" data-action="factorial">x!</button>
-                    <button class="btn btn-sci" data-action="percent">%</button>
-                </div>
-
-                <!-- Standard Keypad -->
-                <div class="standard-keypad">
-                    <!-- Row 1 -->
-                    <button class="btn btn-op btn-clear" data-action="clear">AC</button>
-                    <button class="btn btn-op" data-action="backspace">
-                        <i data-lucide="delete"></i>
-                    </button>
-                    <button class="btn btn-op" data-action="parenthesis">( )</button>
-                    <button class="btn btn-op" data-action="operator" data-val="/">÷</button>
-
-                    <!-- Row 2 -->
-                    <button class="btn btn-num" data-val="7">7</button>
-                    <button class="btn btn-num" data-val="8">8</button>
-                    <button class="btn btn-num" data-val="9">9</button>
-                    <button class="btn btn-op" data-action="operator" data-val="*">×</button>
-
-                    <!-- Row 3 -->
-                    <button class="btn btn-num" data-val="4">4</button>
-                    <button class="btn btn-num" data-val="5">5</button>
-                    <button class="btn btn-num" data-val="6">6</button>
-                    <button class="btn btn-op" data-action="operator" data-val="-">-</button>
-
-                    <!-- Row 4 -->
-                    <button class="btn btn-num" data-val="1">1</button>
-                    <button class="btn btn-num" data-val="2">2</button>
-                    <button class="btn btn-num" data-val="3">3</button>
-                    <button class="btn btn-op" data-action="operator" data-val="+">+</button>
-
-                    <!-- Row 5 -->
-                    <button class="btn btn-num" data-val="negate">±</button>
-                    <button class="btn btn-num" data-val="0">0</button>
-                    <button class="btn btn-num" data-val=".">.</button>
-                    <button class="btn btn-equals" data-action="calculate">=</button>
-                </div>
-            </div>
-        </main>
-
-        <!-- History Drawer -->
-        <div class="history-drawer" id="history-drawer">
-            <div class="drawer-header">
-                <h3>계산 기록</h3>
-                <div class="drawer-actions">
-                    <button class="icon-btn text-danger" id="history-clear" title="기록 전체 삭제">
-                        <i data-lucide="trash-2"></i>
-                    </button>
-                    <button class="icon-btn" id="history-close">
-                        <i data-lucide="x"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="drawer-content" id="history-list">
-                <!-- History Items will be dynamically generated here -->
-                <div class="empty-history">
-                    <i data-lucide="clock" class="empty-icon"></i>
-                    <p>저장된 계산 기록이 없습니다</p>
+<body class="bg-background text-on-background min-h-screen flex flex-col justify-between">
+    <!-- TopNavBar -->
+    <header class="bg-background sticky top-0 z-50 border-b border-outline-variant/10">
+        <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop w-full max-w-max-width mx-auto">
+            <h1 class="font-headline-lg text-headline-lg tracking-tighter text-on-background cursor-pointer" onclick="window.location.reload()">
+                ANTIGRAVITY
+            </h1>
+            <div class="flex items-center space-x-lg">
+                <nav id="nav-tabs" class="hidden md:flex space-x-xl">
+                    <button data-tab="dashboard" class="nav-tab text-primary font-bold font-label-caps text-label-caps transition-transform duration-200 hover:-translate-y-0.5">DASHBOARD</button>
+                    <button data-tab="milestones" class="nav-tab text-on-surface-variant font-label-caps text-label-caps transition-transform duration-200 hover:-translate-y-0.5">MILESTONES</button>
+                    <button data-tab="archive" class="nav-tab text-on-surface-variant font-label-caps text-label-caps transition-transform duration-200 hover:-translate-y-0.5">ARCHIVE</button>
+                </nav>
+                <div class="flex items-center space-x-md">
+                    <!-- Toggle Add Form Button -->
+                    <button id="toggle-form-btn" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" title="이벤트 트래커 열기">add</button>
+                    <button id="theme-toggle-btn" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" title="테마 전환">settings</button>
+                    <div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline/20">
+                        <img class="w-full h-full object-cover" alt="User Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4XKeK5KBNsVhQyeLHFY7vv2-1BfdU6cekQf5sn5eUFGR7t118LmQyGTrtrRfTc4NJPU-gPohYY9r1nFjbq3aMTMW7y1IDzybxdRZUMwtn7JD6dyLSClkD896ksCuGQonbBbiuKjcWzqAIy_5KvZ2zD7xyM9JfHsH2fXdiJlDmmbM6A5KsH-5G6nzjjJLo32_t_cY8IhcO01ZMsJILZWtzIRe-JcObrXUIlT5z9f8jpqpsXI0Uvplpoy9tYyCqTqVzQc6XDMQTdI4"/>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Toast Notification (for copy to clipboard feedback) -->
-        <div class="toast-container" id="toast">
-            <span id="toast-message">클립보드에 복사되었습니다.</span>
+    </header>
+
+    <main class="flex-grow max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl space-y-xl w-full">
+        <!-- Add New Countdown Section (INITIALIZE TEMPORAL TRACKER) -->
+        <section id="add-form-container" class="bg-surface-container-low p-lg rounded-xl border border-outline-variant/30 transition-all duration-300">
+            <h2 class="font-label-caps text-label-caps text-primary mb-lg">INITIALIZE TEMPORAL TRACKER</h2>
+            
+            <form id="dday-form" class="grid grid-cols-1 md:grid-cols-4 gap-lg items-end">
+                <!-- Event Title -->
+                <div class="flex flex-col space-y-xs">
+                    <label for="event-name" class="font-label-caps text-[10px] text-on-surface-variant ml-1">EVENT NAME</label>
+                    <input id="event-name" required class="bg-transparent border border-outline text-body-md font-body-md px-md py-sm rounded-lg glow-focus transition-all duration-200 placeholder:text-outline-variant" placeholder="e.g. PROJECT ALPHA LAUNCH" type="text"/>
+                </div>
+                
+                <!-- Target Date / Time -->
+                <div class="flex flex-col space-y-xs">
+                    <label for="target-date" class="font-label-caps text-[10px] text-on-surface-variant ml-1">TARGET DATE & TIME</label>
+                    <input id="target-date" required class="bg-transparent border border-outline text-body-md font-body-md px-md py-sm rounded-lg glow-focus transition-all duration-200 text-on-surface-variant w-full" type="datetime-local"/>
+                </div>
+                
+                <!-- Category Select -->
+                <div class="flex flex-col space-y-xs">
+                    <label for="category" class="font-label-caps text-[10px] text-on-surface-variant ml-1">CATEGORY</label>
+                    <select id="category" class="bg-transparent border border-outline text-body-md font-body-md px-md py-sm rounded-lg glow-focus transition-all duration-200 text-on-surface-variant w-full cursor-pointer">
+                        <option class="bg-surface-container text-white" value="general">GENERAL</option>
+                        <option class="bg-surface-container text-white" value="work">WORK / ACADEMIC</option>
+                        <option class="bg-surface-container text-white" value="anniversary">ANNIVERSARY</option>
+                        <option class="bg-surface-container text-white" value="health">HEALTH / SPORT</option>
+                        <option class="bg-surface-container text-white" value="travel">TRAVEL</option>
+                        <option class="bg-surface-container text-white" value="exam">EXAM / INTERVIEW</option>
+                        <option class="bg-surface-container text-white" value="other">OTHER</option>
+                    </select>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex items-end">
+                    <button type="submit" class="w-full h-[42px] bg-primary-container text-on-primary-container font-label-caps text-label-caps rounded-lg hover:-translate-y-1 active:scale-95 transition-all duration-200 shadow-lg shadow-primary/10 cursor-pointer">
+                        COMMENCE COUNTDOWN
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Sort Select (Styled premium text alignment) -->
+        <section class="flex justify-end items-center space-x-md text-xs text-on-surface-variant">
+            <span class="font-label-caps text-[10px] tracking-wider text-outline">ORDER BY:</span>
+            <select id="sort-select" class="bg-transparent border-0 border-b border-outline-variant/30 py-0.5 text-xs text-primary font-medium focus:ring-0 cursor-pointer outline-none">
+                <option class="bg-surface-container text-white" value="timeLeft-asc" selected>TIME REMAINING (ASC)</option>
+                <option class="bg-surface-container text-white" value="timeLeft-desc">TIME REMAINING (DESC)</option>
+                <option class="bg-surface-container text-white" value="createdAt-desc">RECENTLY LAUNCHED</option>
+                <option class="bg-surface-container text-white" value="createdAt-asc">OLDEST RECORDS</option>
+            </select>
+        </section>
+
+        <!-- Main Bento Grid -->
+        <section id="dday-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-lg">
+            <!-- Dynamically generated Bento Cards will go here -->
+        </section>
+
+        <!-- Empty State Container -->
+        <div id="empty-state" class="hidden flex flex-col items-center justify-center text-center py-20 bg-surface-container-low border border-dashed border-outline-variant rounded-xl p-8 backdrop-blur-sm">
+            <div class="w-16 h-16 rounded-xl bg-surface-container-high border border-outline-variant/30 flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary text-3xl">timer</span>
+            </div>
+            <h3 class="text-md font-bold text-white mb-1">NO TEMPORAL TRACKS INITIALIZED</h3>
+            <p class="text-xs text-on-surface-variant max-w-sm mb-6">Initialize a new countdown above to track your target deadlines.</p>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <footer class="bg-background border-t border-outline-variant/10 mt-12 opacity-65 w-full">
+        <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-lg w-full max-w-max-width mx-auto">
+            <div class="font-label-caps text-label-caps text-on-surface-variant mb-md md:mb-0">
+                © 2026 ANTIGRAVITY STUDIO. ALL RIGHTS RESERVED.
+            </div>
+            <div class="flex space-x-lg">
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">TERMS</a>
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">PRIVACY</a>
+                <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">API</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Alerts -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Share D-Day Modal (Futuristic Glass design) -->
+    <div id="share-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-surface-container-high border border-outline w-full max-w-md p-6 rounded-2xl shadow-glass transform scale-95 transition-all duration-300 relative">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-md font-bold text-primary flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary">share</span> SHARE TIMELINE
+                </h3>
+                <button id="close-share-btn" class="p-1 hover:bg-surface-container rounded-lg text-on-surface-variant hover:text-white transition-colors cursor-pointer">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="mb-5">
+                <p class="text-xs text-on-surface-variant mb-2">Copy the timeline tracking metadata below:</p>
+                <div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl text-xs font-mono text-on-surface break-words mb-3 relative max-h-40 overflow-y-auto select-all" id="share-content">
+                    <!-- Dynamic shared text goes here -->
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button id="copy-text-btn" class="flex-1 py-2.5 bg-primary-container text-on-primary-container rounded-lg font-bold text-xs hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md">
+                    <span class="material-symbols-outlined text-sm">content_copy</span> COPY DATA
+                </button>
+                <button id="copy-link-btn" class="flex-1 py-2.5 bg-surface-container border border-outline text-white rounded-lg font-bold text-xs hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <span class="material-symbols-outlined text-sm">link</span> COPY SHARE LINK
+                </button>
+            </div>
         </div>
     </div>
 
+    <!-- Debug & Error Logging Overlay Panel -->
+    <div id="debug-log-panel" class="fixed bottom-0 left-0 right-0 bg-black/95 text-red-500 font-mono text-[10px] p-4 z-[9999] max-h-40 overflow-y-auto border-t border-red-500/30 hidden">
+        <div class="flex justify-between items-center mb-2 text-slate-400 pb-1 border-b border-slate-800">
+            <span>⚠️ 브라우저 콘솔 에러 감지기 (오류 디버깅)</span>
+            <button onclick="document.getElementById('debug-log-panel').style.display='none'" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300">닫기</button>
+        </div>
+        <div id="debug-errors-list"></div>
+    </div>
+    <script>
+        // Catch global JavaScript runtime errors and display them
+        window.onerror = function(message, source, lineno, colno, error) {
+            const panel = document.getElementById('debug-log-panel');
+            const list = document.getElementById('debug-errors-list');
+            if (panel) panel.style.display = 'block';
+            if (list) {
+                const errDiv = document.createElement('div');
+                errDiv.className = 'py-1 border-b border-slate-900';
+                errDiv.textContent = `[에러] ${message} (라인: ${lineno}, 파일: ${source ? source.split('/').pop() : '알수없음'})`;
+                list.appendChild(errDiv);
+            }
+            return false;
+        };
+        // Catch console.error logs
+        console.error = (function(oldError) {
+            return function(...args) {
+                oldError.apply(console, args);
+                const panel = document.getElementById('debug-log-panel');
+                const list = document.getElementById('debug-errors-list');
+                if (panel) panel.style.display = 'block';
+                if (list) {
+                    const errDiv = document.createElement('div');
+                    errDiv.className = 'py-1 border-b border-slate-900 text-yellow-500';
+                    errDiv.textContent = `[콘솔에러] ${args.join(' ')}`;
+                    list.appendChild(errDiv);
+                }
+            };
+        })(console.error);
+    </script>
+
     <!-- Core App Logic -->
     <script src="script.js"></script>
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-    </script>
 </body>
 </html>
