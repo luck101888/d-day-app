@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://my-gratitude-diary.vercel.app/sitemap.xml
+Sitemap: https://d-day-app-dusky.vercel.app/sitemap.xml
