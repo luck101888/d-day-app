@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 1. Aura Gratitude 감사일기 (메인 서비스) -->
+  <url>
+    <loc>https://my-gratitude-diary.vercel.app/</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- 2. LensAI 누끼 텍스트 합성 도구 (서브 서비스) -->
+  <url>
+    <loc>https://my-gratitude-diary.vercel.app/Nuggi/</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

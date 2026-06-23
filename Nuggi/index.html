@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LensAI • Text Behind Image (누끼 텍스트 합성)</title>
+    <meta name="description" content="LensAI는 이미지에서 대상을 분리하여 텍스트를 인물/사물 뒤에 배치할 수 있는 프리미엄 누끼 합성 도구입니다." />
+    <meta name="keywords" content="누끼, 이미지 합성, 텍스트 합성, 배경 텍스트, AI 이미지 편집, LensAI" />
+    <link rel="canonical" href="https://my-gratitude-diary.vercel.app/Nuggi/" />
+
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="LensAI • Text Behind Image (누끼 텍스트 합성)" />
+    <meta property="og:description" content="누끼 이미지 뒤에 감각적으로 텍스트를 합성해 보세요." />
+    <meta property="og:url" content="https://my-gratitude-diary.vercel.app/Nuggi/" />
+
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@100..900&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Material Symbols for beautiful modern icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/Nuggi/style.css">
+    <!-- Load React & htm UMD bundles globally to prevent ESM import failures -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js" crossorigin></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js" crossorigin></script>
+</head>
+<body>
+    <div id="root">
+        <!-- Loader during initial script fetch and before React mounts -->
+        <div class="pre-loader">
+            <div class="spinner-outer">
+                <div class="spinner-inner"></div>
+            </div>
+            <p class="loader-text">LensAI 초기화 중...</p>
+            <p class="loader-sub">잠시만 기다려 주세요.</p>
+        </div>
+    </div>
+
+    <!-- Service Worker registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/Nuggi/sw.js')
+                    .then(reg => console.log('Service Worker registered successfully:', reg.scope))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+
+    <!-- Debug & Error Logging Overlay Panel -->
+    <div id="debug-log-panel" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.95); color: #ff5555; font-family: monospace; font-size: 12px; padding: 15px; z-index: 99999; max-height: 200px; overflow-y: auto; border-top: 2px solid #ff4444; text-align: left; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center; color: #aaa; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 8px; font-weight: bold;">
+            <span>⚠️ 브라우저 실행 에러 감지기 (실시간 디버그 패널)</span>
+            <button onclick="document.getElementById('debug-log-panel').style.display='none'" style="background: #222; border: 1px solid #444; color: #fff; padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 11px;">닫기</button>
+        </div>
+        <div id="debug-errors-list"></div>
+    </div>
+    <script>
+        const list = document.getElementById('debug-errors-list');
+        const showErr = (msg, type = 'ERROR') => {
+            const errDiv = document.createElement('div');
+            errDiv.style.padding = '4px 0';
+            errDiv.style.borderBottom = '1px solid #222';
+            if (type === 'WARN') errDiv.style.color = '#ffaa00';
+            else if (type === 'LOG') errDiv.style.color = '#00ffaa';
+            else errDiv.style.color = '#ff4444';
+            errDiv.textContent = `[${type}] ${msg}`;
+            list.appendChild(errDiv);
+        };
+        
+        window.onerror = function(message, source, lineno, colno, error) {
+            const file = source ? source.split('/').pop() : 'unknown';
+            showErr(`${message} (위치: ${file}:${lineno}:${colno})`);
+            return false;
+        };
+        
+        window.onunhandledrejection = function(event) {
+            showErr(`Promise 거부됨: ${event.reason}`);
+        };
+        
+        console.error = (function(oldError) {
+            return function(...args) {
+                oldError.apply(console, args);
+                showErr(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'CONSOLE-ERROR');
+            };
+        })(console.error);
+
+        console.log = (function(oldLog) {
+            return function(...args) {
+                oldLog.apply(console, args);
+                showErr(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'LOG');
+            };
+        })(console.log);
+
+        console.warn = (function(oldWarn) {
+            return function(...args) {
+                oldWarn.apply(console, args);
+                showErr(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'WARN');
+            };
+        })(console.warn);
+        
+        // Initial Diagnostics
+        console.log("진단 시작...");
+        console.log("React 로드 상태: " + (window.React ? "성공" : "실패"));
+        console.log("ReactDOM 로드 상태: " + (window.ReactDOM ? "성공" : "실패"));
+        console.log("htm 로드 상태: " + (window.htm ? "성공" : "실패"));
+    </script>
+
+    <!-- Main JavaScript Logic (ES Module) -->
+    <script type="module" src="/Nuggi/script.js?v=1.0.6"></script>
+</body>
+</html>

@@ -25,6 +25,17 @@ try {
         $urlPath = $urlPath.Replace("/", "\").TrimStart("\")
         $filePath = Join-Path (Get-Location) $urlPath
         
+        # If path points to a directory, ensure it ends with a trailing slash (302 redirect)
+        if (Test-Path $filePath -PathType Container) {
+            if (!$request.RawUrl.Split('?')[0].EndsWith("/")) {
+                $response.StatusCode = 302
+                $response.Redirect($request.RawUrl + "/")
+                $response.OutputStream.Close()
+                continue
+            }
+            $filePath = Join-Path $filePath "index.html"
+        }
+        
         if (Test-Path $filePath -PathType Leaf) {
             $bytes = [System.IO.File]::ReadAllBytes($filePath)
             
